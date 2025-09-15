@@ -11,7 +11,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin"; 
 import StudentFormModal from "./components/StudentFormModal";
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://ananta-education.onrender.com';
 
 // API functions
 const getCourses = async () => {

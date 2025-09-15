@@ -37,42 +37,55 @@
       setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
-      if (e) e.preventDefault();
-      
-      // Basic validation
-      if (!form.name || !form.phone) {
-        alert("Please fill in all required fields");
-        return;
-      }
+   const handleSubmit = async (e) => {
+  if (e) e.preventDefault();
+  
+  // Basic validation
+  if (!form.name || !form.phone) {
+    alert("Please fill in all required fields");
+    return;
+  }
 
-      setIsSubmitting(true);
-      
-      try {
-        await registerStudent(form);
-        setShowSuccess(true);
-        
-        // Reset form after successful submission
-        setForm({
-          name: "",
-          phone: "",
-          email: "",
-          courseInterested: "",
-          collegeInterested: "",
-        });
-        
-        // Hide success message after 5 seconds
-        setTimeout(() => {
-          setShowSuccess(false);
-        }, 5000);
-        
-      } catch (err) {
-        alert("Registration failed. Please try again later. ❌");
-        console.error('Registration error:', err);
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
+  setIsSubmitting(true);
+  
+  try {
+    // Send data to backend API
+    const res = await fetch("https://ananta-education.onrender.com/students", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    setShowSuccess(true);
+
+    // Reset form after successful submission
+    setForm({
+      name: "",
+      phone: "",
+      email: "",
+      courseInterested: "",
+      collegeInterested: "",
+    });
+
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 5000);
+
+  } catch (err) {
+    alert("Registration failed. Please try again later. ❌");
+    console.error("Registration error:", err);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
     // Get selected course and college details for display
     const selectedCourse = courses.find(course => course._id === form.courseInterested);
