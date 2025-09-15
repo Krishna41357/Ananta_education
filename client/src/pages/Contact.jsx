@@ -11,7 +11,7 @@ const Colleges = ({ selectedCollegeId, courses, colleges, onBackToHome }) => {
 
   // Initialize colleges and handle selected college
   useEffect(() => {
-    if (colleges.length > 0) {
+    if (colleges.length> 0) {
       setFilteredColleges(colleges);
       
       // If a specific college is selected, find and display it

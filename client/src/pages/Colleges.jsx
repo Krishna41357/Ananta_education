@@ -16,7 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
+
 
 const API_URL  = 'https://ananta-education.onrender.com';
 
@@ -150,7 +150,7 @@ const Colleges = ({ selectedCollegeId, onBackToHome }) => {
   if (selectedCollege) {
     return (
       <div className="min-h-screen w-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-        <Navbar />
+
 
         {/* Back Navigation */}
         <div className="bg-white/90 backdrop-blur-sm shadow-lg border-b border-slate-200">
@@ -323,7 +323,7 @@ const Colleges = ({ selectedCollegeId, onBackToHome }) => {
   // ✅ College List Page
   return (
     <div className="min-h-screen w-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <Navbar />
+     
 
       {/* Enhanced Header */}
       <div className="bg-white/90 backdrop-blur-sm shadow-xl border-b border-slate-200">

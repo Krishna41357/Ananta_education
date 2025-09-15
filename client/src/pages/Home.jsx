@@ -358,7 +358,7 @@ const Home = () => {
             courses={courses} 
             colleges={colleges} 
             registerStudent={registerStudent}
-            id="student-registration"
+            _id="student-registration"
           />
         </div>
       </main>

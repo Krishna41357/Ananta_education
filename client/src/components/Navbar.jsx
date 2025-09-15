@@ -112,7 +112,7 @@ const Navbar = ({ courses = [], colleges = [] }) => {
               {/* CTA Button */}
               <li>
                 <a 
-                  href="#register" 
+                  href="#student-registration" 
                   className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-6 py-2 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200"
                 >
                   Get Started
