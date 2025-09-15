@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { ChevronDown, GraduationCap, MapPin, BookOpen, Users } from 'lucide-react';
+import { ChevronDown, GraduationCap, MapPin, BookOpen, Users, Menu, X } from 'lucide-react';
 
 const Navbar = ({ courses = [], colleges = [] }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
 
   // Map courses by category/level for organized display
   const mappedCoursesByLevel = courses.reduce((acc, course) => {
@@ -24,28 +26,41 @@ const Navbar = ({ courses = [], colleges = [] }) => {
     return acc;
   }, {});
 
+  const toggleMobileDropdown = (dropdown) => {
+    setMobileActiveDropdown(mobileActiveDropdown === dropdown ? null : dropdown);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    setMobileActiveDropdown(null);
+  };
+
   return (
     <>
       <nav className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white shadow-lg sticky top-0 z-50 relative"
-           onMouseLeave={() => setActiveDropdown(null)}>
+           onMouseLeave={() => setActiveDropdown(null)}>  
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-yellow-400 to-orange-500 p-2 rounded-lg">
-                <GraduationCap className="h-6 w-6 text-gray-900" />
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-200 to-yellow-100 bg-clip-text text-transparent">
-                Anant Education
-              </h1>
-            </div>
+  
+    <img 
+      src="/logo.jpg" 
+      alt="Ananta Education Logo" 
+      className="h-16 w-16 object-contain"
+    />
+  <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-200 to-yellow-100 bg-clip-text text-transparent">
+    Ananta Education
+  </h1>
+</div>
+
             
-            {/* Navigation Menu */}
+            {/* Desktop Navigation Menu */}
             <ul className="hidden md:flex space-x-8 items-center">
               <li>
                 <a 
                   href="#home" 
-                  className="hover:text-yellow-200 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
+                  className="text-yellow-200 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
                   Home
                 </a>
@@ -107,19 +122,160 @@ const Navbar = ({ courses = [], colleges = [] }) => {
 
             {/* Mobile Menu Button */}
             <div className="md:hidden">
-              <button className="text-white hover:text-yellow-200 transition-colors">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-white hover:text-yellow-200 transition-colors"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </button>
             </div>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-gradient-to-r from-indigo-700 via-blue-700 to-cyan-700 border-t border-white/20">
+            <div className="px-4 py-2 space-y-1">
+              <a 
+                href="#home" 
+                className="block px-3 py-3 text-white hover:bg-white/10 rounded-lg transition-colors"
+                onClick={closeMobileMenu}
+              >
+                Home
+              </a>
+              
+              {/* Mobile Courses Dropdown */}
+              <div>
+                <button
+                  onClick={() => toggleMobileDropdown('courses')}
+                  className="w-full flex items-center justify-between px-3 py-3 text-white hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <div className="flex items-center space-x-2">
+                    <BookOpen className="h-4 w-4" />
+                    <span>Courses</span>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${
+                    mobileActiveDropdown === 'courses' ? 'rotate-180' : ''
+                  }`} />
+                </button>
+                
+                {mobileActiveDropdown === 'courses' && (
+                  <div className="ml-4 mt-2 space-y-1">
+                    {Object.entries(mappedCoursesByLevel).map(([level, levelCourses]) => (
+                      <div key={level} className="border-l-2 border-white/20 pl-4 py-2">
+                        <h4 className="text-sm font-semibold text-yellow-200 mb-2">{level} Programs</h4>
+                        {levelCourses.slice(0, 3).map((course) => (
+                          <a
+                            key={course._id}
+                            href={`#course-${course._id}`}
+                            className="block px-2 py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded transition-colors"
+                            onClick={closeMobileMenu}
+                          >
+                            {course.name}
+                          </a>
+                        ))}
+                        {levelCourses.length > 3 && (
+                          <span className="block px-2 py-1 text-xs text-white/60">
+                            +{levelCourses.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
+              {/* Mobile Colleges Dropdown */}
+              <div>
+                <button
+                  onClick={() => toggleMobileDropdown('colleges')}
+                  className="w-full flex items-center justify-between px-3 py-3 text-white hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <div className="flex items-center space-x-2">
+                    <Users className="h-4 w-4" />
+                    <span>Colleges</span>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${
+                    mobileActiveDropdown === 'colleges' ? 'rotate-180' : ''
+                  }`} />
+                </button>
+                
+                {mobileActiveDropdown === 'colleges' && (
+                  <div className="ml-4 mt-2 space-y-2 max-h-80 overflow-y-auto">
+                    {Object.keys(mappedCollegesByType).length > 0 ? (
+                      Object.entries(mappedCollegesByType).map(([type, typeColleges]) => (
+                        <div key={type} className="border-l-2 border-white/20 pl-4 py-2">
+                          <h4 className="text-sm font-semibold text-yellow-200 mb-2">{type} Institutions ({typeColleges.length})</h4>
+                          {typeColleges.map((college) => (
+                            <a
+                              key={college._id}
+                              href={`#college-${college._id}`}
+                              className="block px-2 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
+                              onClick={closeMobileMenu}
+                            >
+                              <div>{college.name}</div>
+                              <div className="text-xs text-white/60 mt-1 space-y-1">
+                                {college.location && (
+                                  <div className="flex items-center">
+                                    <MapPin className="h-3 w-3 mr-1" />
+                                    {college.location}
+                                  </div>
+                                )}
+                                {college.courseCount && (
+                                  <span className="inline-block bg-white/20 px-2 py-0.5 rounded-full">
+                                    {college.courseCount} courses
+                                  </span>
+                                )}
+                                {college.description && (
+                                  <div className="text-white/50">
+                                    {college.description.length > 80 
+                                      ? `${college.description.substring(0, 80)}...` 
+                                      : college.description
+                                    }
+                                  </div>
+                                )}
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-4 text-white/60">
+                        <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                        <p className="text-sm">No colleges available</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+              
+              <a 
+                href="#contact" 
+                className="block px-3 py-3 text-white hover:bg-white/10 rounded-lg transition-colors"
+                onClick={closeMobileMenu}
+              >
+                Contact
+              </a>
+              
+              <a 
+                href="#register" 
+                className="block mx-3 my-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-4 py-3 rounded-lg font-semibold text-center hover:shadow-lg transition-all duration-200"
+                onClick={closeMobileMenu}
+              >
+                Get Started
+              </a>
+            </div>
+          </div>
+        )}
         
-        {/* Courses Dropdown */}
+        {/* Desktop Courses Dropdown */}
         {activeDropdown === 'courses' && (
           <div 
-            className="absolute top-full left-0 right-0 bg-white rounded-none shadow-2xl border-t-4 border-blue-500 z-50"
+            className="hidden md:block absolute top-full left-0 right-0 bg-white rounded-none shadow-2xl border-t-4 border-blue-500 z-50"
             onMouseEnter={() => setActiveDropdown('courses')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
@@ -141,24 +297,25 @@ const Navbar = ({ courses = [], colleges = [] }) => {
                           {level} Programs
                         </h4>
                       </div>
-                      <div className="p-4 space-y-2">
-                        {levelCourses.map((course) => (
-                          <a
-                            key={course._id}
-                            href={`#course-${course._id}`}
-                            className="block p-3 text-gray-700 hover:bg-blue-50 transition-colors duration-200 rounded-lg border border-gray-100 hover:border-blue-200"
-                            onClick={() => setActiveDropdown(null)}
-                          >
-                            <div className="font-medium text-sm text-gray-800">{course.name}</div>
-                            <div className="text-xs text-gray-500 mt-2 flex items-center flex-wrap gap-2">
-                              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                                {course.level}
-                              </span>
-                              <span>{course.eligibility}</span>
-                            </div>
-                          </a>
-                        ))}
-                      </div>
+                      <div className="p-4 flex flex-wrap gap-2">
+  {levelCourses.map((course) => (
+    <a
+      key={course._id}
+      href={`#course-${course._id}`}
+      className="p-3 text-gray-700 hover:bg-blue-50 transition-colors duration-200 rounded-lg border border-gray-100 hover:border-blue-200 min-w-[200px] flex-1"
+      onClick={() => setActiveDropdown(null)}
+    >
+      <div className="font-medium text-sm text-gray-800">{course.name}</div>
+      <div className="text-xs text-gray-500 mt-2 flex items-center flex-wrap gap-2">
+        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+          {course.level}
+        </span>
+        <span>{course.eligibility}</span>
+      </div>
+    </a>
+  ))}
+</div>
+
                     </div>
                   ))}
                 </div>
@@ -172,10 +329,10 @@ const Navbar = ({ courses = [], colleges = [] }) => {
           </div>
         )}
         
-        {/* Colleges Dropdown */}
+        {/* Desktop Colleges Dropdown */}
         {activeDropdown === 'colleges' && (
           <div 
-            className="absolute top-full left-0 right-0 bg-white rounded-none shadow-2xl border-t-4 border-green-500 z-50"
+            className="hidden md:block absolute top-full left-0 right-0 bg-white rounded-none shadow-2xl border-t-4 border-green-500 z-50"
             onMouseEnter={() => setActiveDropdown('colleges')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
