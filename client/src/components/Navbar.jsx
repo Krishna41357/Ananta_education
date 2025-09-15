@@ -59,7 +59,7 @@ const Navbar = ({ courses = [], colleges = [] }) => {
             <ul className="hidden md:flex space-x-8 items-center">
               <li>
                 <a 
-                  href="#home" 
+                  href="../pages/Home" 
                   className="text-yellow-200 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
                   Home
@@ -102,7 +102,7 @@ const Navbar = ({ courses = [], colleges = [] }) => {
               
               <li>
                 <a 
-                  href="#contact" 
+                  href="#student-registration" 
                   className="hover:text-yellow-200 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                 >
                   Contact
