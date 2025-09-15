@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import Navbar from "../components/Navbar";
 
-const API_URL = "http://localhost:5000";
+const API_URL  = 'https://ananta-education.onrender.com';
 
 const Colleges = ({ selectedCollegeId, onBackToHome }) => {
   const [colleges, setColleges] = useState([]);

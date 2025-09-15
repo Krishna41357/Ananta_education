@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import StudentForm from '../components/StudentForm';
 import Colleges from './Colleges'; 
 
-const API_URL = 'http://localhost:5000'; 
+const API_URL = 'https://ananta-education.onrender.com'; 
 
 // API functions - same as your existing ones
 const getCourses = async () => {
