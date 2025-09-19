@@ -41,7 +41,6 @@ function App() {
   const [loading, setLoading] = useState(true);
   
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Fetch data on app mount
   useEffect(() => {
@@ -86,27 +85,6 @@ function App() {
     fetchAndMapData();
   }, []);
 
-  // Navigation handlers
-  const handleCollegeClick = (collegeId) => {
-    // Navigate to colleges page with specific college ID
-    navigate('/colleges', { state: { selectedCollegeId: collegeId } });
-  };
-
-  const handleViewAllColleges = () => {
-    // Navigate to colleges page without specific college
-    navigate('/colleges');
-  };
-
-  const handleCourseClick = (courseId) => {
-    // Navigate to courses page with specific course ID
-    navigate('/courses', { state: { selectedCourseId: courseId } });
-  };
-
-  const handleViewAllCourses = () => {
-    // Navigate to courses page without specific course
-    navigate('/courses');
-  };
-
   // Show loading screen while fetching data
   if (loading) {
     return (
@@ -134,10 +112,6 @@ function App() {
         <Navbar 
           courses={courses} 
           colleges={colleges}
-          onCollegeClick={handleCollegeClick}
-          onViewAllColleges={handleViewAllColleges}
-          onCourseClick={handleCourseClick}
-          onViewAllCourses={handleViewAllCourses}
         />
       )}
       
@@ -148,8 +122,6 @@ function App() {
             <Home 
               courses={courses} 
               colleges={colleges}
-              onCollegeClick={handleCollegeClick}
-              onViewAllColleges={handleViewAllColleges}
             />
           } 
         />
