@@ -1,18 +1,19 @@
 // StudentFormModal.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import StudentForm from "./StudentForm";
 
 const StudentFormModal = ({ courses, colleges }) => {
   const [showForm, setShowForm] = useState(false);
+  const [atBottom, setAtBottom] = useState(false);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
-    // Check if already registered (saved in localStorage)
     const registered = localStorage.getItem("studentRegistered");
     if (registered) return;
 
     const interval = setInterval(() => {
       setShowForm(true);
-    }, 40000); // every 60 seconds
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
@@ -27,7 +28,6 @@ const StudentFormModal = ({ courses, colleges }) => {
 
       if (!res.ok) throw new Error("Failed to register student");
 
-      // Mark as registered
       localStorage.setItem("studentRegistered", "true");
       setShowForm(false);
     } catch (err) {
@@ -36,11 +36,18 @@ const StudentFormModal = ({ courses, colleges }) => {
     }
   };
 
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const isBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + 10;
+    setAtBottom(isBottom);
+  };
+
   if (!showForm) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 mb-10 md:mb-0">
-      <div className="relative w-full max-w-4xl h-screen md:max-h-[95vh] scale-[0.75] sm:scale-[0.85] md:scale-95 lg:scale-100 overflow-hidden">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2">
+      <div className="relative w-full max-w-4xl h-screen md:max-h-[95vh] scale-[0.9] sm:scale-[0.95] md:scale-100 overflow-hidden">
         {/* Close Button */}
         <button
           onClick={() => setShowForm(false)}
@@ -49,15 +56,37 @@ const StudentFormModal = ({ courses, colleges }) => {
           ✕
         </button>
 
-        {/* Student Form Container with scroll */}
-        <div className="max-h-full overflow-y-auto">
-          <StudentForm 
+        {/* Scrollable Form Container */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="max-h-full overflow-y-scroll hide-scrollbar relative px-2 sm:px-4"
+        >
+          <StudentForm
             courses={courses}
             colleges={colleges}
             registerStudent={registerStudent}
           />
         </div>
+
+        {/* Scroll Down Indicator (now outside form content) */}
+        {!atBottom && (
+          <div className="absolute bottom-4 left-[60%] text-gray-600 animate-bounce pointer-events-none text-sm sm:text-base md:text-lg">
+            ↓ Scroll down to submit
+          </div>
+        )}
       </div>
+
+      {/* Custom CSS for hiding scrollbar */}
+      <style jsx>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none; /* IE/Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none; /* Chrome/Safari */
+        }
+      `}</style>
     </div>
   );
 };

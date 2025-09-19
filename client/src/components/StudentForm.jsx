@@ -179,7 +179,7 @@
   </label>
   <input
     list="coursesList"
-    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 outline-none bg-white"
+    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 outline-none bg-white text-black"
     name="courseInterested"
     placeholder="Select or type your preferred course"
     value={form.courseInterested}
@@ -202,7 +202,7 @@
   </label>
   <input
     list="collegesList"
-    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 outline-none bg-white"
+    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 outline-none bg-white text-black"
     name="collegeInterested"
     placeholder="Select or type your preferred college"
     value={form.collegeInterested}
