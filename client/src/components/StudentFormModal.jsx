@@ -51,7 +51,7 @@ const StudentFormModal = ({ courses, colleges }) => {
         {/* Close Button */}
         <button
           onClick={() => setShowForm(false)}
-          className="absolute text-black top-2 right-2 bg-white rounded-full p-2 shadow-md hover:bg-gray-200 transition z-10"
+          className="absolute text-black top-2 right-8 bg-white rounded-full p-2 shadow-md hover:bg-gray-200 transition z-10"
         >
           ✕
         </button>
