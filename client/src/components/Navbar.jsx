@@ -182,14 +182,7 @@ const Navbar = () => {
                 </button>
               </li>
               
-              <li>
-                <button 
-                  onClick={() => navigate('/contact')}
-                  className="hover:text-yellow-200 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-white/10"
-                >
-                  Contact
-                </button>
-              </li>
+             
               
               {/* CTA Button */}
               <li>

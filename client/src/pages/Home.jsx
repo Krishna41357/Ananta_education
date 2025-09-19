@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GraduationCap, Users, Award, TrendingUp, Phone, Mail, Star, CheckCircle, ArrowRight, BookOpen, Target, Trophy } from 'lucide-react';
 import axios from "axios";
+import useScrollToHash from '../hooks/useScrollToHash';
 
 // Import components
 import Navbar from '../components/Navbar';
@@ -39,6 +40,7 @@ const registerStudent = async (formData) => {
 };
 
 const Home = () => {
+  useScrollToHash();
   const [courses, setCourses] = useState([]);
   const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -149,9 +151,9 @@ const Home = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight text-white">
-            Your Dream Career
+            Kick Start Your Dream Career
             <span className="block bg-gradient-to-r from-orange-300 to-orange-400 bg-clip-text text-transparent mt-2">
-              Starts Here
+              With Ananta Education
             </span>
           </h1>
           
@@ -354,12 +356,12 @@ const Home = () => {
         </div>
         
         <div className="bg-white rounded-3xl shadow-xl p-2">
-          <StudentForm 
-            courses={courses} 
-            colleges={colleges} 
-            registerStudent={registerStudent}
-            _id="student-registration"
-          />
+           <StudentForm
+        id="student-registration"
+        courses={courses}
+        colleges={colleges}
+        registerStudent={registerStudent}
+      />
         </div>
       </main>
 
