@@ -304,7 +304,7 @@ const Navbar = () => {
                       Object.entries(mappedCollegesByType).map(([type, typeColleges]) => (
                         <div key={type} className="border-l-2 border-white/20 pl-4 py-2">
                           <h4 className="text-sm font-semibold text-yellow-200 mb-2">{type} Institutions ({typeColleges.length})</h4>
-                          {typeColleges.slice(0, 4).map((college) => (
+                          {typeColleges.slice(0, 8).map((college) => (
                             <button
                               key={college._id}
                               onClick={() => handleCollegeClick(college._id)}
@@ -326,7 +326,7 @@ const Navbar = () => {
                               </div>
                             </button>
                           ))}
-                          {typeColleges.length > 4 && (
+                          {typeColleges.length > 8 && (
                             <button
                               onClick={() => {
                                 handleReadMoreClick();
@@ -435,7 +435,7 @@ const Navbar = () => {
           </div>
         )}
         
-        {/* Desktop Colleges Dropdown */}
+        {/* Desktop Colleges Dropdown - Updated to show only 8 colleges */}
         {activeDropdown === 'colleges' && (
           <div 
             className="hidden md:block absolute top-full left-0 right-0 bg-white rounded-none shadow-2xl border-t-4 border-green-500 z-50"
@@ -455,108 +455,57 @@ const Navbar = () => {
                   <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
                   <span className="ml-3 text-gray-600 font-medium">Loading colleges...</span>
                 </div>
-              ) : Object.keys(mappedCollegesByType).length > 0 ? (
-                <div className="space-y-8">
-                  {Object.entries(mappedCollegesByType).map(([type, typeColleges]) => (
-                    <div key={type} className="bg-white rounded-lg border border-gray-200 shadow-lg">
-                      <div className="px-4 py-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-t-lg border-b border-gray-200">
-                        <h4 className="font-semibold text-gray-800 flex items-center">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                          {type} Institutions ({typeColleges.length})
-                        </h4>
-                      </div>
-                      
-                      {type === 'Private' ? (
-                        // Horizontal layout for Private colleges
-                        <div className="p-4">
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            {typeColleges.slice(0, 4).map((college) => (
-                              <button
-                                key={college._id}
-                                onClick={() => handleCollegeClick(college._id)}
-                                className="p-3 bg-white text-gray-800 hover:bg-green-50 transition-colors duration-200 rounded-lg border border-gray-100 hover:border-green-200 hover:shadow-md text-left"
-                              >
-                                <div className="font-medium text-sm text-gray-900 mb-2">{college.name}</div>
-                                <div className="text-xs text-gray-500 space-y-1">
-                                  <span className="flex items-center">
-                                    <MapPin className="h-3 w-3 mr-1" />
-                                    {college.location}
-                                  </span>
-                                  {college.courseCount > 0 && (
-                                    <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                                      {college.courseCount} courses
-                                    </span>
-                                  )}
-                                </div>
-                                {college.description && (
-                                  <div className="text-xs text-gray-400 mt-2">
-                                    {college.description.length > 60 
-                                      ? `${college.description.substring(0, 60)}...` 
-                                      : college.description
-                                    }
-                                  </div>
-                                )}
-                              </button>
-                            ))}
-                          </div>
-                          {typeColleges.length > 4 && (
-                            <div className="mt-6 text-center">
-                              <button
-                                onClick={handleReadMoreClick}
-                                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
-                              >
-                                <ArrowRight className="h-5 w-5 mr-2" />
-                                View All {typeColleges.length} Private Colleges
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        // Vertical layout for other college types
-                        <div className="p-4 space-y-2 bg-white">
-                          {typeColleges.slice(0, 3).map((college) => (
-                            <button
-                              key={college._id}
-                              onClick={() => handleCollegeClick(college._id)}
-                              className="w-full text-left p-3 bg-white text-gray-800 hover:bg-green-50 transition-colors duration-200 rounded-lg border border-gray-100 hover:border-green-200 hover:shadow-md"
-                            >
-                              <div className="font-medium text-sm text-gray-900 mb-2">{college.name}</div>
-                              <div className="text-xs text-gray-500 flex items-center justify-between flex-wrap">
-                                <span className="flex items-center">
-                                  <MapPin className="h-3 w-3 mr-1" />
-                                  {college.location}
-                                </span>
-                                {college.courseCount > 0 && (
-                                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full mt-1">
-                                    {college.courseCount} courses
-                                  </span>
-                                )}
+              ) : colleges.length > 0 ? (
+                <div className="bg-white rounded-lg border border-gray-200 shadow-lg">
+                  <div className="p-6">
+                    {/* Show first 8 colleges in a grid layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                      {colleges.slice(0, 8).map((college) => (
+                        <button
+                          key={college._id}
+                          onClick={() => handleCollegeClick(college._id)}
+                          className="p-4 bg-white text-gray-800 hover:bg-green-50 transition-colors duration-200 rounded-lg border border-gray-100 hover:border-green-200 hover:shadow-md text-left"
+                        >
+                          <div className="font-medium text-sm text-gray-900 mb-2 line-clamp-2">{college.name}</div>
+                          <div className="text-xs text-gray-500 space-y-1">
+                            {college.location && (
+                              <div className="flex items-center">
+                                <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
+                                <span className="truncate">{college.location}</span>
                               </div>
-                              {college.description && (
-                                <div className="text-xs text-gray-400 mt-2">
-                                  {college.description.length > 60 
-                                    ? `${college.description.substring(0, 60)}...` 
-                                    : college.description
-                                  }
-                                </div>
+                            )}
+                            <div className="flex items-center justify-between">
+                              <span className={`inline-block px-2 py-1 rounded-full text-xs ${
+                                college.type === 'Government' 
+                                  ? 'bg-blue-100 text-blue-800' 
+                                  : 'bg-purple-100 text-purple-800'
+                              }`}>
+                                {college.type}
+                              </span>
+                              {college.courseCount > 0 && (
+                                <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
+                                  {college.courseCount} courses
+                                </span>
                               )}
-                            </button>
-                          ))}
-                          {typeColleges.length > 3 && (
-                            <div className="pt-4">
-                              <button
-                                onClick={handleReadMoreClick}
-                                className="w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
-                              >
-                                <ArrowRight className="h-5 w-5 mr-2" />
-                                View All {typeColleges.length} {type} Colleges
-                              </button>
                             </div>
-                          )}
-                        </div>
-                      )}
+                          </div>
+                        </button>
+                      ))}
                     </div>
-                  ))}
+                    
+                    {/* View All Colleges Button - Show if there are more than 8 colleges */}
+                    {colleges.length > 8 && (
+                      <div className="text-center pt-4 border-t border-gray-200">
+                        <button
+                          onClick={handleReadMoreClick}
+                          className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 font-medium shadow-md hover:shadow-lg"
+                        >
+                          <ArrowRight className="h-5 w-5 mr-2" />
+                          View All {colleges.length} Colleges
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="py-16 text-center text-gray-500 bg-white">

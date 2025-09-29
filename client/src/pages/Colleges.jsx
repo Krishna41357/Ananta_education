@@ -370,7 +370,7 @@ const Colleges = ({ selectedCollegeId, onBackToHome }) => {
                 {/* Toggle */}
                 <button
                   onClick={(e) => toggleCardExpansion(college._id, e)}
-                  className="w-full mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center justify-center"
+                  className="w-full mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center justify-center bg-white border-blue-700"
                 >
                   {isExpanded ? (
                     <>
@@ -378,7 +378,7 @@ const Colleges = ({ selectedCollegeId, onBackToHome }) => {
                     </>
                   ) : (
                     <>
-                      Read More <ChevronDown className="h-3 w-3 ml-1" />
+                      Read More <ChevronDown className="h-3  w-3 ml-1" />
                     </>
                   )}
                 </button>

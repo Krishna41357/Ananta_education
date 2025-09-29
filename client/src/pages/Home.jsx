@@ -113,22 +113,22 @@ const Home = () => {
     );
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-orange-50">
-        <div className="text-center">
-          <div className="relative">
-            <div className="animate-spin rounded-full h-20 w-20 border-4 border-orange-100 border-t-orange-500 mx-auto mb-6"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <GraduationCap className="h-8 w-8 text-blue-600" />
-            </div>
-          </div>
-          <p className="text-blue-700 font-semibold text-lg">Loading your future opportunities...</p>
-          <p className="text-gray-600 mt-2">Preparing the best colleges for you</p>
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-orange-50">
+  //       <div className="text-center">
+  //         <div className="relative">
+  //           <div className="animate-spin rounded-full h-20 w-20 border-4 border-orange-100 border-t-orange-500 mx-auto mb-6"></div>
+  //           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+  //             <GraduationCap className="h-8 w-8 text-blue-600" />
+  //           </div>
+  //         </div>
+  //         <p className="text-blue-700 font-semibold text-lg">Loading your future opportunities...</p>
+  //         <p className="text-gray-600 mt-2">Preparing the best colleges for you</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen w-screen bg-white">

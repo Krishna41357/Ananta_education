@@ -8,11 +8,20 @@ const StudentFormModal = ({ courses, colleges }) => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
+    // Check if already registered
     const registered = localStorage.getItem("studentRegistered");
-    if (registered) return;
+    if (registered === "true") {
+      setShowForm(false);
+      return; // Don't set up interval if already registered
+    }
 
+    // Set up interval to show form after 10 seconds
     const interval = setInterval(() => {
-      setShowForm(true);
+      // Double-check registration status before showing
+      const isRegistered = localStorage.getItem("studentRegistered");
+      if (isRegistered !== "true") {
+        setShowForm(true);
+      }
     }, 10000);
 
     return () => clearInterval(interval);
@@ -28,11 +37,17 @@ const StudentFormModal = ({ courses, colleges }) => {
 
       if (!res.ok) throw new Error("Failed to register student");
 
+      // Mark as registered FIRST
       localStorage.setItem("studentRegistered", "true");
+      
+      // Then close the form
       setShowForm(false);
+      
+      return true; // Indicate success
     } catch (err) {
       console.error("❌ Registration error:", err);
       alert("Failed to register. Try again later.");
+      return false; // Indicate failure
     }
   };
 
@@ -43,19 +58,13 @@ const StudentFormModal = ({ courses, colleges }) => {
     setAtBottom(isBottom);
   };
 
-  if (!showForm) return null;
+  // Don't render anything if already registered
+  const registered = localStorage.getItem("studentRegistered");
+  if (registered === "true" || !showForm) return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2">
       <div className="relative w-full max-w-4xl h-screen md:max-h-[95vh] scale-[0.9] sm:scale-[0.95] md:scale-100 overflow-hidden">
-        {/* Close Button */}
-        <button
-          onClick={() => setShowForm(false)}
-          className="absolute text-black top-2 right-8 bg-white rounded-full p-2 shadow-md hover:bg-gray-200 transition z-10"
-        >
-          ✕
-        </button>
-
         {/* Scrollable Form Container */}
         <div
           ref={scrollRef}
