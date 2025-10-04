@@ -35,6 +35,16 @@ export const deleteStudent = (id) =>
 // Fetch all colleges
 export const getColleges = () => handleRequest(API.get("/colleges"));
 
+// Fetch Indian colleges - FIXED
+export const getIndianColleges = () => handleRequest(API.get("/colleges/india"));
+
+// Fetch Abroad colleges - FIXED
+export const getAbroadColleges = () => handleRequest(API.get("/colleges/abroad"));
+
+// Fetch colleges by region (India or Abroad)
+export const getCollegesByRegion = (region) => 
+  handleRequest(API.get(`/colleges/region/${region}`));
+
 // Add a new college (admin only)
 export const addCollege = (collegeData) =>
   handleRequest(API.post("/colleges", collegeData));
@@ -63,11 +73,15 @@ export const updateCourse = (id, courseData) =>
 // Delete a course (admin only)
 export const deleteCourse = (id) =>
   handleRequest(API.delete(`/courses/${id}`));
+
 export default {
   registerStudent,
   getStudents,
   deleteStudent,
   getColleges,
+  getIndianColleges,
+  getAbroadColleges,
+  getCollegesByRegion,
   addCollege,
   updateCollege,
   deleteCollege,

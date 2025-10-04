@@ -86,21 +86,21 @@ function App() {
   }, []);
 
   // Show loading screen while fetching data
-  if (loading) {
-    return (
+   if (loading) {
+     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="text-center bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-2xl">
           <div className="relative">
             <div className="animate-spin rounded-full h-20 w-20 border-4 border-slate-200 border-t-indigo-600 mx-auto mb-6"></div>
-            <div className="absolute inset-0 animate-pulse">
-              <div className="h-6 w-6 bg-indigo-400 rounded absolute top-2 right-2"></div>
-            </div>
-          </div>
-          <h3 className="text-xl font-bold text-slate-800 mb-2">Loading Application</h3>
-          <p className="text-slate-600 font-medium">
-            Fetching colleges, courses, and preparing your experience...
-          </p>
-        </div>
+             <div className="absolute inset-0 animate-pulse">
+               <div className="h-6 w-6 bg-indigo-400 rounded absolute top-2 right-2"></div>
+             </div>
+           </div>
+           <h3 className="text-xl font-bold text-slate-800 mb-2">Loading Application</h3>
+         <p className="text-slate-600 font-medium">
+           Fetching colleges, courses, and preparing your experience...
+        </p>
+       </div>
       </div>
     );
   }
