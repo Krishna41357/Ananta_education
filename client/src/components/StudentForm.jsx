@@ -91,7 +91,7 @@ const StudentForm = ({ courses = [], colleges = [], registerStudent }) => {
             <div>
               <h3 className="text-lg font-semibold text-green-800">Registration Successful! 🎉</h3>
               <p className="text-green-700 mt-1">
-                Thank you for registering with EduPath India. Our expert counselor will contact you within 24 hours to discuss your career goals.
+                Thank you for registering with Ananta Education. Our expert counselor will contact you within 24 hours to discuss your career goals.
               </p>
             </div>
           </div>
