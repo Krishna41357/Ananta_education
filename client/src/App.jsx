@@ -143,10 +143,10 @@ function App() {
             />
           } 
         />
-        {/* <Route 
+        <Route 
   path="/contact" 
   element={<Navigate to="/#student-registration" replace />} 
-/> */}
+/>
 
         {/* Admin routes */}
         <Route
