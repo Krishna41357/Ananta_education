@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Colleges from "./pages/Colleges";
 import Courses from "./pages/Courses";
-import Contact from "./pages/Contact";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin"; 
 import StudentFormModal from "./components/StudentFormModal";
@@ -88,7 +87,7 @@ function App() {
   // Show loading screen while fetching data
    if (loading) {
      return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="min-h-screen w-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="text-center bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-2xl">
           <div className="relative">
             <div className="animate-spin rounded-full h-20 w-20 border-4 border-slate-200 border-t-indigo-600 mx-auto mb-6"></div>
@@ -143,10 +142,7 @@ function App() {
             />
           } 
         />
-        <Route 
-  path="/contact" 
-  element={<Navigate to="/#student-registration" replace />} 
-/>
+        
 
         {/* Admin routes */}
         <Route

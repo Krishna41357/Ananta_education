@@ -18,6 +18,7 @@ import {
   Globe,
 } from "lucide-react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 // Base API instance
 const API = axios.create({
@@ -143,11 +144,16 @@ const Colleges = ({ selectedCollegeId, onBackToHome }) => {
       )
     );
   };
+  const navigate = useNavigate();
+  const backToHome = ()=>{
+    navigate('/');
+    if(onBackToHome) onBackToHome();
+  }
 
   // ---------- LOADING ----------
   if (loading) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-emerald-50 px-4">
+      <div className="min-h-screen w-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-emerald-50 px-4">
         <div className="bg-white/80 backdrop-blur-xl p-6 sm:p-10 rounded-2xl shadow-lg text-center border border-blue-100 max-w-md w-full">
           <div className="animate-spin h-12 w-12 sm:h-14 sm:w-14 border-4 border-blue-200 border-t-blue-600 mx-auto mb-4 rounded-full"></div>
           <h3 className="text-lg sm:text-xl font-semibold text-gray-800">Loading Colleges</h3>
@@ -263,164 +269,197 @@ const Colleges = ({ selectedCollegeId, onBackToHome }) => {
   return (
     <div className="min-h-screen w-screen bg-gradient-to-br from-white via-blue-50 to-emerald-50">
       {/* Header */}
-      <div className="sticky top-0 w-full bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-sm z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-          {onBackToHome && (
-            <button
-              onClick={onBackToHome}
-              className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base"
-            >
-              <ArrowLeft className="h-4 w-4 mr-1" />
-              <span className="hidden sm:inline">Home</span>
-            </button>
-          )}
-          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">College Directory</h1>
-          <div className="w-16 sm:w-20"></div>
-        </div>
-      </div>
-
-      {/* Search + Filters */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-4 sm:p-6 shadow-md border border-gray-200">
-          <div className="flex flex-col gap-3 sm:gap-4">
-            {/* Search */}
-            <div className="w-full relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <input
-                type="text"
-                placeholder="Search colleges, courses, locations..."
-                className="w-full pl-10 pr-9 py-2.5 sm:py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-200 focus:outline-none text-sm sm:text-base"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-
-            {/* Regional Filters */}
-            <div className="flex flex-wrap items-center gap-2">
-              {["all", "india", "abroad"].map((region) => (
-                <button
-                  key={region}
-                  onClick={() => setFilterRegion(region)}
-                  className={`px-3 sm:px-4 py-2 rounded-full font-medium text-xs sm:text-sm transition-all flex items-center gap-1 ${
-                    filterRegion === region
-                      ? "bg-gradient-to-r from-blue-600 to-emerald-600 text-white shadow-md"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
-                >
-                  {region === "all" && <Filter className="h-3 w-3" />}
-                  {region === "india" && <MapPin className="h-3 w-3" />}
-                  {region === "abroad" && <Globe className="h-3 w-3" />}
-                  {region === "all"
-                    ? "All"
-                    : region === "india"
-                    ? "India"
-                    : "Abroad"}
-                </button>
-              ))}
-            </div>
+    <div className="sticky top-0 w-full bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700 backdrop-blur-lg border-b-4 border-orange-400 shadow-xl z-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
+    <div className="flex justify-between items-center">
+      {/* Left: Home Button - Always visible */}
+      <button
+        onClick={backToHome}
+        className="group flex items-center bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-4 py-2.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 border border-white/20 hover:border-orange-300 shadow-lg hover:shadow-xl"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+        <span className="hidden sm:inline">Back to Home</span>
+        <span className="sm:hidden">Home</span>
+      </button>
+      
+      {/* Center: Title */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-3">
+        <div className="hidden md:block">
+          <div className="bg-orange-500 rounded-full p-3 shadow-lg">
+            <GraduationCap className="h-6 w-6 text-white" />
           </div>
-
-          <p className="mt-3 text-gray-600 text-xs sm:text-sm">
-            Showing {filteredColleges.length} of {colleges.length} institutions
+        </div>
+        <div className="text-center">
+          <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-white drop-shadow-lg whitespace-nowrap">
+            Explore Top Colleges
+          </h1>
+          <p className="hidden sm:block text-xs sm:text-sm text-blue-100 font-medium">
+            Find your perfect institution
           </p>
         </div>
       </div>
+      
+      {/* Right: Spacer for balance */}
+      <div className="w-20 sm:w-32"></div>
+    </div>
+  </div>
+</div>
+
+
+      {/* Search + Filters */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+  <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-xl border-2 border-gray-100">
+    <div className="flex flex-col gap-3 sm:gap-4">
+      {/* Search */}
+      <div className="w-full relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-600 h-5 w-5" />
+        <input
+          type="text"
+          placeholder="Search colleges, courses, locations..."
+          className="w-full pl-11 pr-10 py-3 sm:py-3.5 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none text-sm sm:text-base transition-all"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        {searchTerm && (
+          <button
+            onClick={() => setSearchTerm("")}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-600 transition-colors"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
+      </div>
+
+      {/* Regional Filters */}
+      <div className="flex flex-wrap items-center gap-2">
+        {["all", "india", "abroad"].map((region) => (
+          <button
+            key={region}
+            onClick={() => setFilterRegion(region)}
+            className={`px-4 sm:px-5 py-2.5 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 border-2 ${
+              filterRegion === region
+                ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg border-blue-600 scale-105"
+                : "bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-orange-300"
+            }`}
+          >
+            {region === "all" && <Filter className="h-4 w-4" />}
+            {region === "india" && <MapPin className="h-4 w-4" />}
+            {region === "abroad" && <Globe className="h-4 w-4" />}
+            {region === "all"
+              ? "All Colleges"
+              : region === "india"
+              ? "Indian Colleges"
+              : "Abroad Colleges"}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div className="mt-4 flex items-center justify-between">
+      <p className="text-gray-600 text-xs sm:text-sm font-medium">
+        Showing <span className="text-blue-600 font-bold">{filteredColleges.length}</span> of <span className="text-blue-600 font-bold">{colleges.length}</span> institutions
+      </p>
+    </div>
+  </div>
+</div>
+
 
       {/* College Cards */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 pb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-        {filteredColleges.map((college) => {
-          const isExpanded = expandedCards.has(college._id);
-          return (
-            <div
-              key={college._id}
-              className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-md border border-gray-200 hover:shadow-xl transition-all overflow-hidden"
+  {filteredColleges.map((college) => {
+    const isExpanded = expandedCards.has(college._id);
+    return (
+      <div
+        key={college._id}
+        className="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 hover:border-orange-300 hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2"
+      >
+        {/* Header with gradient */}
+        <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 h-20 sm:h-24 flex items-center justify-between px-4 sm:px-5 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent"></div>
+          <div className="absolute -right-8 -top-8 w-24 h-24 bg-orange-400/20 rounded-full blur-2xl"></div>
+          
+          <GraduationCap className="h-8 w-8 sm:h-10 sm:w-10 text-white relative z-10 drop-shadow-lg" />
+          <div className="flex items-center gap-1.5 text-xs bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30 relative z-10">
+            {college.region === "Abroad" ? (
+              <Globe className="h-3.5 w-3.5 flex-shrink-0 text-orange-300" />
+            ) : (
+              <MapPin className="h-3.5 w-3.5 flex-shrink-0 text-orange-300" />
+            )}
+            <span className="truncate text-white font-medium">{college.region || "India"}</span>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-4 sm:p-5">
+          <h3
+            onClick={() => handleCollegeSelect(college)}
+            className="text-base sm:text-lg font-bold text-gray-900 mb-3 cursor-pointer hover:text-blue-700 transition-colors line-clamp-2 group-hover:text-blue-600"
+          >
+            {highlightSearchTerm(college.name, searchTerm)}
+          </h3>
+          
+          <div className="flex items-center text-gray-600 mb-4">
+            <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full mr-2"></div>
+            <p className="text-xs sm:text-sm truncate">
+              {highlightSearchTerm(college.location || "Location not available", searchTerm)}
+            </p>
+          </div>
+
+          {/* Tags */}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="flex items-center text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full font-semibold border border-blue-100">
+              <BookOpen className="h-3 w-3 mr-1" />
+              {college.coursesOffered?.length || 0} Programs
+            </span>
+            <span
+              className={`text-xs px-3 py-1.5 rounded-full font-semibold border ${
+                college.type === "Government"
+                  ? "bg-blue-50 text-blue-700 border-blue-200"
+                  : "bg-orange-50 text-orange-700 border-orange-200"
+              }`}
             >
-              {/* Header */}
-              <div className="bg-gradient-to-r from-blue-600 to-emerald-600 h-16 sm:h-20 flex items-center justify-between px-4 text-white">
-                <GraduationCap className="h-6 w-6 sm:h-8 sm:w-8" />
-                <div className="flex items-center gap-1 text-xs bg-white/20 px-2 py-1 rounded-full">
-                  {college.region === "Abroad" ? (
-                    <Globe className="h-3 w-3 flex-shrink-0" />
-                  ) : (
-                    <MapPin className="h-3 w-3 flex-shrink-0" />
-                  )}
-                  <span className="truncate">{college.region || "India"}</span>
-                </div>
-              </div>
+              {college.type}
+            </span>
+          </div>
 
-              {/* Content */}
-              <div className="p-4 sm:p-5">
-                <h3
-                  onClick={() => handleCollegeSelect(college)}
-                  className="text-base sm:text-lg font-semibold text-gray-900 mb-2 cursor-pointer hover:text-blue-600 transition-colors line-clamp-2"
-                >
-                  {highlightSearchTerm(college.name, searchTerm)}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-600 flex items-center">
-                  <MapPin className="h-3 w-3 mr-1 text-orange-500 flex-shrink-0" />
-                  <span className="truncate">{highlightSearchTerm(college.location || "Location not available", searchTerm)}</span>
-                </p>
-
-                {/* Tags */}
-                <div className="flex items-center justify-between mt-3 gap-2">
-                  <span className="text-xs bg-blue-100 text-blue-700 px-2 sm:px-3 py-1 rounded-full truncate">
-                    {college.coursesOffered?.length || 0} Programs
-                  </span>
-                  <span
-                    className={`text-xs px-2 sm:px-3 py-1 rounded-full font-medium truncate ${
-                      college.type === "Government"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-orange-100 text-orange-700"
-                    }`}
-                  >
-                    {college.type}
-                  </span>
-                </div>
-
-                {/* Expandable */}
-                {isExpanded && (
-                  <div className="mt-4 border-t pt-3 space-y-3">
-                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                      {college.description?.substring(0, 150) + "..." ||
-                        "A premier educational institution committed to excellence."}
-                    </p>
-                    <button
-                      onClick={() => handleCollegeSelect(college)}
-                      className="w-full bg-gradient-to-r from-blue-600 to-emerald-600 text-white py-2 px-3 rounded-lg font-medium hover:shadow-md transition-all text-sm"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                )}
-
-                {/* Toggle */}
-                <button
-                  onClick={(e) => toggleCardExpansion(college._id, e)}
-                  className="w-full mt-3 text-blue-600 hover:text-blue-800 text-xs sm:text-sm font-medium flex items-center justify-center"
-                >
-                  {isExpanded ? (
-                    <>
-                      Show Less <ChevronDown className="h-3 w-3 ml-1 rotate-180" />
-                    </>
-                  ) : (
-                    <>
-                      Read More <ChevronDown className="h-3 w-3 ml-1" />
-                    </>
-                  )}
-                </button>
-              </div>
+          {/* Expandable */}
+          {isExpanded && (
+            <div className="mt-4 pt-4 border-t border-gray-200 space-y-4 animate-fadeIn">
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                {college.description?.substring(0, 150) + "..." ||
+                  "A premier educational institution committed to excellence and holistic development."}
+              </p>
+              <button
+                onClick={() => handleCollegeSelect(college)}
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2.5 px-4 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+              >
+                View Details
+                <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
-          );
-        })}
+          )}
+
+          {/* Toggle */}
+          <button
+            onClick={(e) => toggleCardExpansion(college._id, e)}
+            className="w-full mt-4 text-orange-600 hover:text-orange-700 text-xs sm:text-sm font-semibold flex items-center justify-center transition-colors"
+          >
+            {isExpanded ? (
+              <>
+                Show Less <ChevronDown className="h-4 w-4 ml-1 rotate-180 transition-transform" />
+              </>
+            ) : (
+              <>
+                Read More <ChevronDown className="h-4 w-4 ml-1 transition-transform" />
+              </>
+            )}
+          </button>
+        </div>
       </div>
+    );
+  })}
+</div>
     </div>
   );
 };

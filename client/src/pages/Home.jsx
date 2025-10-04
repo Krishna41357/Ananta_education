@@ -171,10 +171,14 @@
         </span>
       </h1>
       
-      <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 sm:mb-12 text-blue-50 max-w-4xl mx-auto leading-relaxed px-4 drop-shadow-md">
-        Expert guidance for Indian students to find the perfect college and course. 
-        Join thousands who achieved their dreams with our personalized counseling.
-      </p>
+      <div className="max-w-4xl mx-auto px-4 mb-8 sm:mb-12">
+  <div className="bg-black/40 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20">
+    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white leading-relaxed font-medium">
+      Expert guidance for Indian students to find the perfect college and course. 
+      Join thousands who achieved their dreams with our personalized counseling.
+    </p>
+  </div>
+</div>
       
       {/* Enhanced Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto mb-8 sm:mb-12 px-4">
@@ -258,7 +262,8 @@
                   <Award className="h-10 w-10 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Top Colleges</h3>
-                <p className="text-gray-600 leading-relaxed">Access to {colleges.length}+ premier institutions across India including IITs, IIMs, AIIMS, and top private colleges</p>
+                <p className="text-gray-600 leading-relaxed">  Choose from {colleges.length}+ elite institutions nationwide - featuring India's most sought-after colleges and universities with proven placement records
+ </p>
                 <div className="mt-6 flex items-center justify-center text-orange-600 font-semibold group-hover:text-blue-600 transition-colors">
                   <Target className="h-4 w-4 mr-2" />
                   Premium Partnerships
@@ -363,9 +368,10 @@
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Ready to Shape Your Future?
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Take the first step towards your dream career. Our expert counselors are here to guide you through every step of your educational journey.
-            </p>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 sm:mb-12 text-white max-w-4xl mx-auto leading-relaxed px-4 font-medium drop-shadow-2xl">
+  Expert guidance for Indian students to find the perfect college and course. 
+  Join thousands who achieved their dreams with our personalized counseling.
+</p>
           </div>
           
           <div className="bg-white rounded-3xl shadow-xl p-2">
