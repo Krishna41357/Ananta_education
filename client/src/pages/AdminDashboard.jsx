@@ -385,6 +385,16 @@ export default function AdminDashboard() {
                 }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black"
               />
+              <select
+                value={formData.region || "India"}
+                onChange={(e) =>
+                  setFormData({ ...formData, region: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black bg-white"
+              >
+                <option value="India">India</option>
+                <option value="Abroad">Abroad</option>
+              </select>
               <textarea
                 placeholder="Description"
                 value={formData.description || ""}
@@ -396,9 +406,9 @@ export default function AdminDashboard() {
               <input
                 type="url"
                 placeholder="Image URL"
-                value={formData.image || ""}
+                value={formData.imageUrl || formData.image || ""}
                 onChange={(e) =>
-                  setFormData({ ...formData, image: e.target.value })
+                  setFormData({ ...formData, imageUrl: e.target.value })
                 }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black"
               />
